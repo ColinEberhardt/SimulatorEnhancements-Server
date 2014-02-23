@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+
+<html lang="en">
+  <head>
+    <title>Simulator Enhancement</title>
+    
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, user-scalable=no, minimum-scale=1.0, maximum-scale=1.0">
+
+    <script type="text/javascript" src="http://maps.google.com/maps/api/js?sensor=true"></script>
+    <script src="/bower_components/jquery/dist/jquery.js"></script>
+    <script src="/bower_components/bootstrap/js/tab.js"></script>
+    <script src="/bower_components/threejs/build/three.js"></script>
+    <script src="/bower_components/gmaps/gmaps.js"></script>
+
+    <link rel="stylesheet" href="/bower_components/bootstrap/dist/css/bootstrap.css">
+    
+    <style type="text/css">
+      html {
+        height: 100%;
+      }
+      body {
+        margin: 0;
+        padding: 0;
+        height: 100%;
+      }
+    </style>
+  </head>
+  <body>
+
+    <ul class="nav nav-tabs" id="myTab">
+      <li class="active"><a href="#acc">Accelerometer</a></li>
+      <li><a href="#geo">Geolocation</a></li>
+    </ul>
+
+    <div id='content' class="tab-content">
+      <div class="tab-pane active"  id="acc">
+        <div id='accelerometer' class="full-height"></div>
+      </div>
+      <div class="tab-pane" id="geo">
+        <div id='map' class="full-height"></div>
+      </div>
+    </div>
+
+    <script src="/accelerometer.js"></script>
+    <script src="/map.js"></script>
+
+    <script type="text/javascript">
+      // handle the tab clicks
+      $('#myTab a').click(function (e) {
+        e.preventDefault();
+        $(this).tab('show');
+        map.refresh();
+      })
+
+      // ensure that full height divs always occupy the remaining space
+      function resize() {
+        var bodyheight = $(window).height();
+        var remainingHeight = bodyheight - $("#myTab").height();
+     //   map.height = remainingHeight;
+       // map.width = $(window).width();
+        $(".full-height").height(remainingHeight);
+      }
+      $(window).resize(function() {
+         resize(); 
+       });
+      resize();
+    </script>
+
+    <body>
+</body></html>
