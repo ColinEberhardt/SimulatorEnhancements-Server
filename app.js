@@ -13,15 +13,9 @@ function returnData(res) {
   res.end(body);
 }
 
-app.post('/accelerometer', function(req, res){
+app.post('/update', function(req, res){
   console.log(req.body);
-  data.accelerometer = req.body.accelerometer;
-  returnData(res);
-});
-
-app.post('/location', function(req, res){
-  console.log(req.body);
-  data.locations = req.body.locations;
+  data = req.body;
   returnData(res);
 });
 

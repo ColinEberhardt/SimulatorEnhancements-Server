@@ -13,6 +13,7 @@
     <script src="/bower_components/bootstrap/js/tab.js"></script>
     <script src="/bower_components/threejs/build/three.js"></script>
     <script src="/bower_components/gmaps/gmaps.js"></script>
+    <script src="/bower_components/knockoutjs/build/knockout-raw.js"></script>
 
     <link rel="stylesheet" href="/bower_components/bootstrap/dist/css/bootstrap.css">
     
@@ -35,16 +36,26 @@
     </ul>
 
     <div id='content' class="tab-content">
-      <div class="tab-pane active"  id="acc">
+      <div class="tab-pane active" style="position:absolute" id="acc">
         <div id='accelerometer' class="full-height"></div>
+        <div class="panel panel-primary" style="position:absolute; top:10px; right:10px; width:200px;">
+          <div class="panel-heading"><div class="panel-title">Accelerometer</div></div>
+          <div class="panel-body">
+            <b>X:</b> <span data-bind="text: model.accelerometer.x().toFixed(2)"></span><br/>
+            <b>Y:</b> <span data-bind="text: model.accelerometer.y().toFixed(2)"></span><br/>
+            <b>Z:</b> <span data-bind="text: model.accelerometer.z().toFixed(2)"></span><br/>
+          </div>
+        </div>
       </div>
-      <div class="tab-pane" id="geo">
+      <!--<div class="tab-pane" id="geo">
         <div id='map' class="full-height"></div>
-      </div>
+      </div>-->
     </div>
 
+    <script src="/model.js"></script>
+    <script src="/viewModel.js"></script>
+
     <script src="/accelerometer.js"></script>
-    <script src="/map.js"></script>
 
     <script type="text/javascript">
       // handle the tab clicks
@@ -57,9 +68,7 @@
       // ensure that full height divs always occupy the remaining space
       function resize() {
         var bodyheight = $(window).height();
-        var remainingHeight = bodyheight - $("#myTab").height();
-     //   map.height = remainingHeight;
-       // map.width = $(window).width();
+        var remainingHeight = bodyheight - $("#myTab").height() - 100;
         $(".full-height").height(remainingHeight);
       }
       $(window).resize(function() {

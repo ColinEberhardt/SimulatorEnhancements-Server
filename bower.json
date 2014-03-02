@@ -4,6 +4,7 @@
   "dependencies": {
     "bootstrap": "3.1.1",
     "threejs": "r66",
-    "gmaps": "0.4.9"
+    "gmaps": "0.4.9",
+    "knockoutjs": "3.0.0"
   }
 }

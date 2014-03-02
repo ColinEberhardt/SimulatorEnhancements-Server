@@ -27,8 +27,6 @@ google.maps.event.addListener(marker, 'dragend', function() {
   var long = marker.position.lng();
   var lat = marker.position.lat();
 
-  var request = new XMLHttpRequest();
-  request.open('POST', '/location', true);
-  request.setRequestHeader("Content-Type", "application/json;charset=UTF-8"); 
-  request.send(JSON.stringify({'locations':[{'latitude':lat, 'longitude':long}]}));
+  viewModel.model.locations[0].lat(lat);
+  viewModel.model.locations[0].long(long);
 });
