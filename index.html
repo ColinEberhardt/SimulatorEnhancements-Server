@@ -52,11 +52,6 @@
       </div>-->
     </div>
 
-    <script src="/model.js"></script>
-    <script src="/viewModel.js"></script>
-
-    <script src="/accelerometer.js"></script>
-
     <script type="text/javascript">
       // handle the tab clicks
       $('#myTab a').click(function (e) {
@@ -68,7 +63,7 @@
       // ensure that full height divs always occupy the remaining space
       function resize() {
         var bodyheight = $(window).height();
-        var remainingHeight = bodyheight - $("#myTab").height() - 100;
+        var remainingHeight = bodyheight - $("#myTab").height();
         $(".full-height").height(remainingHeight);
       }
       $(window).resize(function() {
@@ -76,6 +71,12 @@
        });
       resize();
     </script>
+
+    <script src="/model.js"></script>
+    <script src="/viewModel.js"></script>
+
+    <script src="/accelerometer.js"></script>
+
 
     <body>
 </body></html>
