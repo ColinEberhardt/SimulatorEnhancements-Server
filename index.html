@@ -18,12 +18,13 @@
     <link rel="stylesheet" href="/bower_components/bootstrap/dist/css/bootstrap.css">
     
     <style type="text/css">
-      html {
+      .tab-pane {
+        position: absolute;
+        width: 100%;
         height: 100%;
       }
-      body {
-        margin: 0;
-        padding: 0;
+      .full-size {
+        width: 100%;
         height: 100%;
       }
     </style>
@@ -35,21 +36,32 @@
       <li><a href="#geo">Geolocation</a></li>
     </ul>
 
-    <div id='content' class="tab-content">
-      <div class="tab-pane active" style="position:absolute" id="acc">
-        <div id='accelerometer' class="full-height"></div>
-        <div class="panel panel-primary" style="position:absolute; top:10px; right:10px; width:200px;">
-          <div class="panel-heading"><div class="panel-title">Accelerometer</div></div>
-          <div class="panel-body">
-            <b>X:</b> <span data-bind="text: model.accelerometer.x().toFixed(2)"></span><br/>
-            <b>Y:</b> <span data-bind="text: model.accelerometer.y().toFixed(2)"></span><br/>
-            <b>Z:</b> <span data-bind="text: model.accelerometer.z().toFixed(2)"></span><br/>
+    <div id='content' class="tab-content full-height">
+      <div class="tab-pane active" id="acc">
+        <div id='accelerometer' class="full-size">
+          <div class="panel panel-primary" style="position:absolute; top:10px; right:10px; width:200px;">
+            <div class="panel-heading"><div class="panel-title">Accelerometer</div></div>
+            <div class="panel-body">
+              <b>X:</b> <span data-bind="text: model.accelerometer.x().toFixed(2)"></span><br/>
+              <b>Y:</b> <span data-bind="text: model.accelerometer.y().toFixed(2)"></span><br/>
+              <b>Z:</b> <span data-bind="text: model.accelerometer.z().toFixed(2)"></span><br/>
+            </div>
           </div>
         </div>
       </div>
-      <!--<div class="tab-pane" id="geo">
-        <div id='map' class="full-height"></div>
-      </div>-->
+
+      <div class="tab-pane" id="geo">
+        <div id='map'  class="full-size">
+          <div class="panel panel-primary" style="position:absolute; top:10px; right:10px; width:200px;">
+            <div class="panel-heading"><div class="panel-title">Accelerometer</div></div>
+            <div class="panel-body">
+              <b>X:</b> <span data-bind="text: model.accelerometer.x().toFixed(2)"></span><br/>
+              <b>Y:</b> <span data-bind="text: model.accelerometer.y().toFixed(2)"></span><br/>
+              <b>Z:</b> <span data-bind="text: model.accelerometer.z().toFixed(2)"></span><br/>
+            </div>
+          </div>
+        </div>
+      </div>
     </div>
 
     <script type="text/javascript">
@@ -76,6 +88,7 @@
     <script src="/viewModel.js"></script>
 
     <script src="/accelerometer.js"></script>
+    <script src="/map.js"></script>
 
 
     <body>

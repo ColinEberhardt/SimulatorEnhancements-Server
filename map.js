@@ -7,7 +7,7 @@ var map = new GMaps({
   lng: -77.028333,
   width: $(window).width(),
   height: remainingHeight,
-  zoom: 12,
+  zoom: 3,
   zoomControl: true,
   zoomControlOpt: {
     style: 'SMALL',
