@@ -1,32 +1,27 @@
-var bodyheight = $(window).height();
-var remainingHeight = bodyheight - $("#myTab").height();
+var map;
 
-var map = new GMaps({
-  div: '#map',
-  lat: -12.043333,
-  lng: -77.028333,
-  width: $(window).width(),
-  height: remainingHeight,
-  zoom: 3,
-  zoomControl: true,
-  zoomControlOpt: {
-    style: 'SMALL',
-    position: 'TOP_LEFT'
-  },
-  panControl: false
-});
+function initialize() {
+  var mapOptions = {
+    center: new google.maps.LatLng(viewModel.model.location.lat(),
+      viewModel.model.location.long()),
+    zoom: 10
+  };
+  map = new google.maps.Map(document.getElementById("map"), mapOptions);
 
+  // To add the marker to the map, use the 'map' property
+  var marker = new google.maps.Marker({
+      position: mapOptions.center,
+      draggable: true
+  });
 
-var marker = map.addMarker({
-  lat: -12.043333,
-  lng: -77.028333,
-  draggable: true
-});
+  marker.setMap(map);
 
-google.maps.event.addListener(marker, 'dragend', function() {
-  var long = marker.position.lng();
-  var lat = marker.position.lat();
+  google.maps.event.addListener(marker, 'dragend', function() {
+    var long = marker.position.lng();
+    var lat = marker.position.lat();
 
-  viewModel.model.locations[0].lat(lat);
-  viewModel.model.locations[0].long(long);
-});
+    viewModel.model.location.lat(lat);
+    viewModel.model.location.long(long);
+  });
+}
+google.maps.event.addDomListener(window, 'load', initialize);

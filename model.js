@@ -5,8 +5,8 @@ function Model() {
     z : ko.observable(0.0)
   };
 
-  this.locations = [{
-    lat : ko.observable(0.0),
-    long : ko.observable(0.0)
-  }];
+  this.location = {
+    lat : ko.observable(54.99),
+    long : ko.observable(-1.62)
+  };
 }
