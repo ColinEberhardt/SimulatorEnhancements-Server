@@ -9,11 +9,13 @@
     <meta name="viewport" content="width=device-width, user-scalable=no, minimum-scale=1.0, maximum-scale=1.0">
 
     <script type="text/javascript" src="http://maps.google.com/maps/api/js?sensor=true"></script>
+
     <script src="/bower_components/jquery/dist/jquery.js"></script>
     <script src="/bower_components/bootstrap/js/tab.js"></script>
     <script src="/bower_components/threejs/build/three.js"></script>
-    <script src="/bower_components/gmaps/gmaps.js"></script>
     <script src="/bower_components/knockoutjs/build/knockout-raw.js"></script>
+
+    <script src="throttle.js"></script>
 
     <link rel="stylesheet" href="/bower_components/bootstrap/dist/css/bootstrap.css">
     
@@ -40,11 +42,17 @@
 
       <div class="tab-pane  full-height active" id="geo">
         <div id='map'  class="full-size"></div>
-        <div class="panel panel-primary" style="position:absolute; top:10px; right:10px; width:200px;">
+        <div class="panel panel-primary" style="position:absolute; top:10px; right:10px; width:270px;">
           <div class="panel-heading"><div class="panel-title">Location</div></div>
           <div class="panel-body">
             <b>Lat:</b> <span data-bind="text: model.location.lat().toFixed(4)"></span><br/>
             <b>Long:</b> <span data-bind="text: model.location.long().toFixed(4)"></span><br/>
+            <br/>
+            <div>
+              <button class="btn" data-bind="enable:!isPlaying() && locations().length > 1, click:play">Play</button>
+              <button class="btn" data-bind="enable: isPlaying, click:stop">Stop</button>
+              <button class="btn" data-bind="enable: locations().length > 0, click:removeAll">Remove All</button>
+            </div>
           </div>
         </div>
       </div>
@@ -69,21 +77,19 @@
       $('#myTab a').click(function (e) {
         e.preventDefault();
         $(this).tab('show');
+        resizeTabs();
         google.maps.event.trigger(map,'resize');
       })
 
       // ensure that full height divs always occupy the remaining space
-      function resize() {
+      function resizeTabs() {
         var bodyheight = $(window).height();
         var remainingHeight = bodyheight - $("#myTab").height();
         $(".full-height").height(remainingHeight);
-      }
-      $(window).resize(function() {
-         resize(); 
-       });
-      $(window).load(function(){
         resize();
-      });
+      }
+      $(window).resize(resizeTabs);
+      $(window).load(resizeTabs);
     </script>
 
     <script src="/model.js"></script>

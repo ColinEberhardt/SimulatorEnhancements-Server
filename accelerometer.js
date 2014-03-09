@@ -71,8 +71,10 @@ container.mousemove(function (event) {
 
 function animate() {
   // update the view model
-  viewModel.model.accelerometer.x(-cube.rotation.x * 0.2);
-  viewModel.model.accelerometer.y(-cube.rotation.y * 0.2);
+  if (viewModel) {
+    viewModel.model.accelerometer.x(-cube.rotation.x * 0.2);
+    viewModel.model.accelerometer.y(-cube.rotation.y * 0.2);
+  }
 
   renderer.render(scene, camera);
 

@@ -1,47 +1,32 @@
-if (!ko.subscribable.fn.throttle) {
-  ko.subscribable.fn.throttle = function(throttleTime, fireWhileChanging) {
-    var subscribable = this;
-    var throttledObservable = ko.observable();
-    var timeoutHandle = null;
-    var newValue = null;
-
-    subscribable.subscribe(function(val) {
-      if (fireWhileChanging) {
-        // capture the updated value
-        newValue = val;
-        // if a timer is not running, start a new one
-        if (!timeoutHandle) {
-          timeoutHandle = setTimeout(function() {
-            throttledObservable(newValue);
-            timeoutHandle = null;
-          }, throttleTime);
-        }
-      } else {
-        // if a timer is running, restart it
-        clearTimeout(timeoutHandle);
-        timeoutHandle = setTimeout(function() {
-          throttledObservable(val);
-          timeoutHandle = null;
-        }, throttleTime);
-      }
-    });
-
-    return throttledObservable;
-  };
-}
-
 
 function ViewModel() {
-  var that = this;
+  var that = this, timerHandle;
+
+  // ------ properties
   this.model = new Model();
-
+  this.isPlaying = ko.observable(false);
   this.locations = ko.observableArray();
-
   this.currentLocation = ko.observable();
+
+  // expose the model as a JSON property
+  this.serializedModel = ko.computed(function() {
+    return ko.toJSON(this.model);
+  }, this);
+
+  // ------  functions
+  this.stop = function() {
+    clearInterval(timerHandle);
+    that.isPlaying(false);
+  };
+
+  this.removeAll = function() {
+    that.locations.removeAll();
+  };
 
   this.play = function() {
     var time = 0;
-    var handle = setInterval(function() {
+    this.isPlaying(true);
+    timerHandle = setInterval(function() {
       var locationCount = that.locations().length - 1;
       var index = Math.floor(locationCount * time);
       var leftLocation = that.locations()[index];
@@ -52,23 +37,21 @@ function ViewModel() {
 
       time += 0.01;
       if (time>=1.0) {
-        clearInterval(handle);
+        clearInterval(timerHandle);
+        that.isPlaying(false);
       }
     }, 100);
   };
 
-  this.serializedModel = ko.computed(function() {
-    return ko.toJSON(this.model);
-  }, this);
-
+  // update the model when the currentLocation property changes
   this.currentLocation.subscribe(function(currentLocation) {
     this.model.location.lat(currentLocation.lat());
     this.model.location.long(currentLocation.lng());
   }, this);
 
+  // when the model changes, send thew new data, throttled at 200ms
   this.serializedModel.throttle(200, true).subscribe(function(newValue) {
     console.log(newValue);
-
     var request = new XMLHttpRequest();
     request.open('POST', '/update', true);
     request.setRequestHeader("Content-Type", "application/json;charset=UTF-8"); 
