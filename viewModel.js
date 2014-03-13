@@ -45,8 +45,8 @@ function ViewModel() {
 
   // update the model when the currentLocation property changes
   this.currentLocation.subscribe(function(currentLocation) {
-    this.model.location.lat(currentLocation.lat());
-    this.model.location.long(currentLocation.lng());
+    this.model.location.latitude(currentLocation.lat());
+    this.model.location.longitude(currentLocation.lng());
   }, this);
 
   // when the model changes, send thew new data, throttled at 200ms

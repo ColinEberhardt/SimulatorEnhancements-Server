@@ -1,7 +1,7 @@
 
 var mapOptions = {
-  center: new google.maps.LatLng(viewModel.model.location.lat(),
-    viewModel.model.location.long()),
+  center: new google.maps.LatLng(viewModel.model.location.latitude(),
+    viewModel.model.location.longitude()),
   disableDoubleClickZoom: true,
   zoom: 10
 };

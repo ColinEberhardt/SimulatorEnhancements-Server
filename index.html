@@ -45,8 +45,8 @@
         <div class="panel panel-primary" style="position:absolute; top:10px; right:10px; width:270px;">
           <div class="panel-heading"><div class="panel-title">Location</div></div>
           <div class="panel-body">
-            <b>Lat:</b> <span data-bind="text: model.location.lat().toFixed(4)"></span><br/>
-            <b>Long:</b> <span data-bind="text: model.location.long().toFixed(4)"></span><br/>
+            <b>Lat:</b> <span data-bind="text: model.location.latitude().toFixed(4)"></span><br/>
+            <b>Long:</b> <span data-bind="text: model.location.longitude().toFixed(4)"></span><br/>
             <br/>
             <div>
               <button class="btn" data-bind="enable:!isPlaying() && locations().length > 1, click:play">Play</button>
