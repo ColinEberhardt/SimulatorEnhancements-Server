@@ -1,8 +1,13 @@
-
 var mapOptions = {
   center: new google.maps.LatLng(viewModel.model.location.latitude(),
     viewModel.model.location.longitude()),
   disableDoubleClickZoom: true,
+  styles: [{
+    featureType: "poi",
+    stylers: [
+      { visibility: "off" }
+    ]
+  }],
   zoom: 10
 };
 var map = new google.maps.Map(document.getElementById("map"), mapOptions);
@@ -12,6 +17,10 @@ var markersArray = [];
 
 google.maps.event.addListener(map, 'dblclick', function(event) {
   viewModel.locations.push(event.latLng);
+});
+
+google.maps.event.addListener(map, 'rightclick', function(event) {
+  viewModel.currentLocation(event.latLng);
 });
 
 var pinImage = new google.maps.MarkerImage("https://chart.googleapis.com/chart?chst=d_map_spin&chld=0.4|0|FF0000|13|b|",
@@ -60,3 +69,17 @@ function clearOverlays() {
   }
   markersArray.length = 0;
 }
+
+var geocoder = new google.maps.Geocoder();
+
+$('#address-geocode').click(function() {
+  var address = $('#address').val();
+  geocoder.geocode( { 'address': address }, function(results, status) {
+    if (status == google.maps.GeocoderStatus.OK) {
+      map.setZoom(16);
+      map.setCenter(results[0].geometry.location);
+    } else {
+      alert('Geocode was not successful for the following reason: ' + status);
+    }
+  });
+});
