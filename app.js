@@ -21,6 +21,14 @@ app.post('/update', function(req, res){
   returnSimulatorData(res);
 });
 
+app.post('/sendMessage', function(req, res) {
+  var dgram = require('dgram'); 
+  var client = dgram.createSocket('udp4');
+  var message = new Buffer(req.body.payload);
+  client.send(message, 0, message.length, req.body.port, 'localhost');
+  console.log(message);
+});
+
 // fetch the curent data
 app.get('/data', function(req, res){
   returnSimulatorData(res);
