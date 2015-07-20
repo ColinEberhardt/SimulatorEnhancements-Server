@@ -7,6 +7,7 @@ function ViewModel() {
   this.isPlaying = ko.observable(false);
   this.locations = ko.observableArray();
   this.currentLocation = ko.observable();
+  this.notification = ko.observable();
 
   // expose the model as a JSON property
   this.serializedModel = ko.computed(function() {
@@ -42,6 +43,18 @@ function ViewModel() {
       }
     }, 100);
   };
+  
+  this.sendPushNotification = function() {
+  	var request = new XMLHttpRequest();
+    request.open('POST', '/sendMessage', true);
+    request.setRequestHeader("Content-Type", "application/json;charset=UTF-8"); 
+    request.send("{\"port\": "+this.model.notification.port() + ", \"payload\": \"" + this.model.notification.payload().replace(/"/g, "\\\"").replace(/\'/g,"\\\"") + "\"}");
+  };
+  
+  this.notification.subscribe(function(notification) {
+  	this.model.notification.port(notification.port());
+  	this.model.notification.payload(notification.payload());
+  }, this);
 
   // update the model when the currentLocation property changes
   this.currentLocation.subscribe(function(currentLocation) {
